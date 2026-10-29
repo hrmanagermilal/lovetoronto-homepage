@@ -1,0 +1,9 @@
+node_modules
+dist
+test-results
+.git
+.vscode
+.env
+.env.*
+*.tsbuildinfo
+npm-debug.log*

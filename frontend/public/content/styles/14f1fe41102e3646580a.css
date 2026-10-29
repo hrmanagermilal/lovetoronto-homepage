@@ -1,0 +1,122 @@
+
+.menu_red > a {
+  color:#dc3545 !important;
+}
+
+.custom-right {
+	text-align: center;
+}
+.custom-right div {
+	display: inline-block;	
+}
+.custom-right ul {
+	min-width: 80px;
+}
+
+
+.language {
+	color: #737477;
+}
+.language select {
+	height: 28px;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+	.custom-right {
+	  text-align: right;
+  }
+}
+
+.grop-input-radio > p {
+	display:flex;
+	height:56px;
+	margin-bottom:18px;
+	padding:14px 18px;
+	border:1px solid #E5E5E5;
+}
+a.grop-evs_evpop {
+	border:1px solid #e8e8e8;
+}
+
+.wpcf7 input,
+.wpcf7 textarea,
+.wpcf7 input[type=number] {
+  color: #222;
+}
+
+/*--------------------------------------------------------------
+## Downloads
+--------------------------------------------------------------*/
+/* 1. Force the Download Monitor Unordered List (UL) to become the Grid Container */
+.dlm-grid-container ul.dlm-downloads,
+ul.dlm-downloads {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* Force 3 columns */
+    gap: 24px !important; /* Gap between cards */
+    margin: 20px 0 !important;
+    padding: 0 !important;
+    list-style: none !important; /* Strip default bullets */
+}
+
+/* 2. Force the List Items (LI) to act as Flex Cards */
+.dlm-grid-container ul.dlm-downloads > li,
+ul.dlm-downloads > li {
+    display: flex !important;
+    flex-direction: column !important; /* Stack image -> text -> button vertically */
+    justify-content: space-between !important; /* Force button to the very bottom */
+    align-items: stretch !important;    /* Let items fill horizontal card space */
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 20px !important;           /* Increased card padding for a cleaner look */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    margin: 0 !important; /* Override theme's default list item margins */
+    float: none !important; /* Disable any old theme layouts */
+    width: 100% !important; /* Fill the grid column */
+    box-sizing: border-box !important;
+}
+
+/* 2b. Thumbnail Image Adjustments (Keep centered & add spacing below) */
+ul.dlm-downloads > li img,
+.dlm-card-thumbnail img {
+    margin: 0 auto 16px auto !important; /* Centers the image and adds 16px gap below */
+    display: block !important;
+    max-width: 180px !important;         /* Keeps the thumbnail small and sharp */
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
+
+/* 2c. Title/Description (Flushed-Left & Spacing below) */
+ul.dlm-downloads > li .dlm-downloads-desc,
+ul.dlm-downloads > li .dlm-card-desc {
+    width: 100% !important;
+    display: block !important;
+    text-align: left !important;         /* Changes alignment to flushed-left */
+    margin-bottom: 20px !important;      /* Adds padding/gap above the button */
+    font-weight: bold !important;        /* Keeps description text bold */
+}
+
+/* 2d. Button Alignment (Center-aligned button container at the bottom) */
+ul.dlm-downloads > li .dlm-downloads-button,
+ul.dlm-downloads > li .dlm-card-button-wrapper {
+    display: flex !important;
+    justify-content: center !important;  /* Centers the action button */
+    width: 100% !important;
+    margin-top: auto !important;         /* Automatically anchors button to the bottom */
+}
+
+/* 3. Smooth hover transition on the cards */
+ul.dlm-downloads > li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 4. Responsive View: 1 Column on Mobile */
+@media (max-width: 768px) {
+    .dlm-grid-container ul.dlm-downloads,
+    ul.dlm-downloads {
+        grid-template-columns: 1fr !important;
+    }
+}

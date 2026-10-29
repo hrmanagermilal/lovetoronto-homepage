@@ -1,0 +1,11 @@
+
+			.wp-block-site-logo.is-default-size img {
+				width: auto;
+				height: auto;
+				max-width: 180px;
+				max-height: 80px;
+			}
+			.wp-block-site-logo img {
+				height: auto;
+			}
+		

@@ -1,0 +1,32 @@
+{
+  "name": "love-toronto-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "content": "node scripts/prepare-content.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "build": "npm test && tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test scripts/content.test.mjs",
+    "test:widgets": "node --test scripts/widgets.test.mjs",
+    "test:browser": "node scripts/browser-layout.mjs"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.7",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "cheerio": "^1.1.2",
+    "postcss": "^8.5.6",
+    "@playwright/test": "^1.56.0",
+    "typescript": "~5.9.2",
+    "vite": "^7.1.0"
+  }
+}

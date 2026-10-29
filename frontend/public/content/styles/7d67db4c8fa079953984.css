@@ -1,0 +1,25 @@
+
+:host {
+				/* Customizer-added Global Event styles */
+				--tec-font-family-sans-serif: inherit;
+--tec-font-family-base: inherit;
+--tec-font-size-0: 12px;
+--tec-font-size-1: 14px;
+--tec-font-size-2: 16px;
+--tec-font-size-3: 18px;
+--tec-font-size-4: 20px;
+--tec-font-size-5: 23px;
+--tec-font-size-6: 25px;
+--tec-font-size-7: 27px;
+--tec-font-size-8: 32px;
+--tec-font-size-9: 36px;
+--tec-font-size-10: 47px;
+			}:host {
+				/* Customizer-added Events Bar styles */
+				--tec-color-text-events-bar-submit-button: #ffffff;
+--tec-color-text-events-bar-submit-button-active: rgba(255,255,255, 0.5);
+--tec-color-text-events-bar-submit-button-hover: rgba(255,255,255, 0.6);
+			}:host {
+				/* Customizer-added Month View styles */
+				--tec-color-background-month-grid: #fff;
+			}

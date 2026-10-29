@@ -1,0 +1,36 @@
+.groppe.sr7-arrows {
+	cursor:pointer;
+	background:#000;
+	background:rgba(0,0,0,0.5);
+	width:60px;
+	height:60px;
+	position:absolute;
+	display:block;
+	z-index:100;
+}
+.groppe.sr7-arrows.sr7-touchhover {
+	background:#000;
+}
+.groppe.sr7-arrows:before {
+	font-family: "revicons";
+	font-size:15px;
+	color:#fff;
+	display:block;
+	line-height: 60px;
+
+	text-align: center;
+}
+.groppe.sr7-arrows.sr7-leftarrow:before {
+	content: "\e824";
+}
+.groppe.sr7-arrows.sr7-rightarrow:before {
+	content: "\e825";
+}
+.sr7-rightarrow.sr7-arrows.groppe {
+    border-radius: 5px 0px 0px 5px;
+}
+.sr7-leftarrow.sr7-arrows.groppe {
+    border-radius: 0px 5px 5px 0px;
+}
+
+@font-face{font-family:"revicons";src:url("../../archive/wp-content/plugins/revslider/public/css/fonts/revicons/fonts/revicons__5510888.woff") format("woff");font-style:normal;font-weight:normal;}

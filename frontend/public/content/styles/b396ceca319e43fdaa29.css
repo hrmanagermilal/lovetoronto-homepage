@@ -1,0 +1,14 @@
+
+/* Dark cover/section overlay + on-dark text. */
+body .wp-site-blocks .is-style-overlay-dark .wp-block-cover__background { background-color: var(--wp--preset--color--base-3); color: var(--wp--preset--color--contrast-3); }
+.wp-block-cover.is-style-overlay-dark .wp-block-cover__background.has-background-dim { opacity: 0.50 !important; }
+:is(.wp-block-designsetgo-section, .wp-block-designsetgo-scroll-slides).is-style-overlay-dark { --dsgo-overlay-color: var(--wp--preset--color--base-3); --dsgo-overlay-opacity: 0.50; color: var(--wp--preset--color--contrast-3); }
+.dsgo-image-accordion-item.is-style-overlay-dark { --dsgo-overlay-color: var(--wp--preset--color--base-3); }
+.wp-block-group.has-background.is-style-overlay-dark { box-shadow: inset 0 0 0 9999px color-mix(in srgb, var(--wp--preset--color--base-3) 50%, transparent); }
+body .wp-site-blocks .is-style-overlay-dark, body .wp-site-blocks .is-style-on-dark { --dsgo-text-color: var(--wp--preset--color--contrast-3); color: var(--wp--preset--color--contrast-3) !important; }
+body .wp-site-blocks .is-style-overlay-dark :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,cite), body .wp-site-blocks .is-style-on-dark :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,cite) { color: var(--wp--preset--color--contrast-3) !important; }
+
+/* Solid dark section background + light text. */
+.is-style-bg-dark { background-color: var(--wp--preset--color--contrast); color: var(--wp--preset--color--base); }
+.is-style-bg-dark a { color: var(--wp--preset--color--base); }
+/*# sourceURL=site-designer-shared-pattern-classes-inline-css */

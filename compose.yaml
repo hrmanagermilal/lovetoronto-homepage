@@ -1,0 +1,10 @@
+services:
+  web:
+    build:
+      context: ./frontend
+    ports:
+      - "85:8080"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp

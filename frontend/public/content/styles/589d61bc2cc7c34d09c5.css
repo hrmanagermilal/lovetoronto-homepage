@@ -1,0 +1,24 @@
+.grop-fix.grop-dont_sectors_single {
+    border-radius: 20px;
+}
+@media only screen and (max-width: 991px) {
+  .vc_row_reverse { flex-direction:column-reverse}
+}
+
+.custom-form-acceptance span.wpcf7-form-control {
+    border: 0;
+    padding: 0;
+}
+.custom-form-acceptance span.wpcf7-list-item {
+    margin: 0;
+}
+.custom-form-acceptance label {
+    padding-top: 5px;
+}
+.custom-form-acceptance input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    display: inline-block !important;
+    vertical-align: top;
+    margin-right: 10px;
+}

@@ -1,0 +1,7 @@
+@media only screen and (max-width: 768px) {
+    .grop-callout_area .grop-cta-cnt .text-left img {
+        display: block;
+        margin: 0 auto 20px auto;
+        float: unset;
+    }
+}

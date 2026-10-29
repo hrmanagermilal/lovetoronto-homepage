@@ -1,0 +1,35 @@
+.grop-oimt_cption {
+    display: none;
+}
+
+.grop-missions_single .grop-missions_icon img {
+    height: 40px !important;
+}
+.grop-missions_single .grop-missions_txt h4 {
+    font-weight: bold !important;
+}
+.grop-missions_single .grop-missions_txt .grop-btn {
+    margin: 0;
+}
+
+.grop-callout_area {
+    height: 250px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+
+    .grop-callout_area {
+        height: 300px!important;
+    }
+    
+}
+@media only screen and (min-width: 1201px) {
+    
+    .grop-callout_area {
+        height: 150px!important;
+    }
+}
+.grop-callout_area .calout-btn span {
+    font-weight:600;
+}
