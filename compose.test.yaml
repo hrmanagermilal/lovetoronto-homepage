@@ -1,0 +1,27 @@
+services:
+  db-test:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: lovetoronto_test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: local-test-only
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d lovetoronto_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  backend-test:
+    build:
+      context: ./backend
+      target: test
+    environment:
+      POSTGRES_HOST: db-test
+      POSTGRES_DB: lovetoronto_test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: local-test-only
+    command: ["sh", "-c", "alembic upgrade head && python -m app.cli seed && alembic check && python -m pytest -q -p no:cacheprovider tests"]
+    depends_on:
+      db-test:
+        condition: service_healthy

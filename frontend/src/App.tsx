@@ -8,6 +8,7 @@ import HeroControls from './HeroControls';
 import MobileMenu from './MobileMenu';
 import type { SliderSettings } from './HeroControls';
 import { createFaqController } from './faq';
+import { createContactController } from './contact';
 
 interface Stylesheet { href: string; media: string }
 interface PageContent { html: string; stylesheets: Stylesheet[]; sliders: SliderSettings[]; bodyClass: string }
@@ -139,6 +140,7 @@ export default function App() {
     const root = container.current;
     if (!root || !content) return;
     const faq = createFaqController(root);
+    const contact = createContactController(root, page?.lang, pageId);
     function click(event: MouseEvent) {
       const element = event.target;
       if (!(element instanceof Element)) return;
@@ -201,6 +203,7 @@ export default function App() {
       event.preventDefault();
       const form = event.target;
       if (!(form instanceof HTMLFormElement)) return;
+      if (form.dataset.inquiryForm === 'true') return;
       const search = form.querySelector<HTMLInputElement>('input[name="s"]');
       if (search?.value.trim()) {
         const text = search.value.trim().toLocaleLowerCase();
@@ -220,11 +223,12 @@ export default function App() {
     root.addEventListener('keydown', keydown);
     return () => {
       faq.dispose();
+      contact.dispose();
       root.removeEventListener('click', click);
       root.removeEventListener('submit', submit);
       root.removeEventListener('keydown', keydown);
     };
-  }, [content, navigate, page?.lang]);
+  }, [content, navigate, page?.lang, pageId]);
   if (!page) return <p role="alert">Page not found: {pageId}</p>;
   if (state.id === pageId && state.error) return <section role="alert"><p>{state.error}</p><button onClick={() => setAttempt(value => value + 1)}>Retry</button></section>;
   return <>

@@ -30,21 +30,28 @@ Docker Desktop 또는 Docker Engine과 Compose가 필요합니다. 상위 폴더
 (`compose.yaml`이 있는 폴더)에서 실행하세요:
 
 ```powershell
+bash scripts/init-env.sh
 docker compose up --build -d
 ```
 
-`http://localhost:85`에서 열립니다. 호스트의 **85번 포트**를 컨테이너 내부의
-비특권 Nginx **8080번 포트**에 연결합니다.
+`http://localhost/`에서 열립니다. 앞단의 Nginx `proxy` 서비스가
+호스트의 **80번 포트**에서 요청을 받아 Compose 내부의 `web:8080`으로 전달합니다.
+기존 직접 접속 주소인 `http://localhost:85`도 유지합니다.
+서버 방화벽과 Azure 네트워크 보안 그룹에서 인바운드 TCP **80번 포트**를 허용하세요.
+HTTPS 인증서 발급 및 자동 갱신은 상위 폴더의
+[README](../README.md#https-and-automatic-renewal)를 참고하세요.
 
 ```powershell
 docker compose ps
-docker compose logs -f web
+docker compose logs -f proxy web
 docker compose down
 ```
 
 Node 24 빌드 단계에서 의존성 설치·콘텐츠 테스트·타입 검사·Vite 빌드를 실행합니다.
-실행 이미지는 비특권 Nginx로 정적 결과물만 제공하며, 읽기 전용 파일시스템과
-임시 `/tmp`를 사용합니다. 별도 WordPress·Node 서버·데이터베이스는 필요하지 않습니다.
+프런트엔드 실행 이미지는 비특권 Nginx로 정적 결과물을 제공하며, 읽기 전용 파일시스템과
+임시 `/tmp`를 사용합니다. 문의 접수는 별도 FastAPI·PostgreSQL·메일 워커가 처리합니다.
+문의 카테고리별 수신자와 메일 템플릿, SMTP `.env` 설정은
+[상위 README](../README.md#inquiry-backend-fastapi--postgresql)를 참고하세요.
 헬스체크는 컨테이너의 8080 포트에서 홈페이지를 요청합니다.
 없는 이미지·PDF·폰트 경로는 HTML로 대체하지 않고 404를 반환합니다.
 
@@ -73,7 +80,10 @@ WordPress 및 Slider Revolution의 JavaScript 자체는 실행하지 않으며,
 
 영문 페이지는 실제 보관된 원본 영문 내용을 사용하며 자동 번역하지 않습니다.
 원본 서버에서 실제로 404였던 자료는 복구되지 않았다는 안내를 유지합니다.
-문의·결제 양식은 원본 표시를 보존하되 로컬에서 전송되지 않도록 차단합니다.
+문의 양식은 한국어·영어의 6개 분류별 입력 항목과 법률·정신건강상담 면책 동의를
+보존하고 `/api/v1/inquiries`로 접수합니다. DB에서 수신자가 설정되고 활성화된
+분류만 제출할 수 있습니다. 접수번호와 메일 발송 대기 상태를 구분하여 표시합니다.
+결제 등 그 외 원본 양식은 로컬에서 전송되지 않도록 차단합니다.
 YouTube 재생, 외부 사이트, 로그인·결제 등 서버 기능에는 인터넷과 해당 외부 서비스가
 필요합니다. 서비스 워커나 외부 동영상의 오프라인 복사본은 제공하지 않습니다.
 
@@ -121,9 +131,13 @@ npm run build
 ```powershell
 npm run test:widgets
 npm run test:browser
+npm run test:contact
 ```
 
 브라우저 테스트에는 Playwright Chromium이 필요합니다.
+`test:contact`는 한국어·영어 카테고리별 양식 전환, 면책 동의, 제출 데이터,
+미설정·오류 상태 및 네트워크 재시도 시 중복 접수 방지를 검사합니다.
+API 응답을 모킹하므로 실제 문의 저장이나 메일 발송은 발생하지 않습니다.
 `test:widgets`는 데스크톱·모바일의 슬라이더 버튼, 반복·자동 전환, 애니메이션 시간과
 정리, 정지 동작, CTA, 영상 비율과 PDF 기본 이미지 영역을 확인합니다.
 iPhone 16(393×852)의 한국어·영어 히어로 전체 슬라이드와 모바일 메뉴의 펼침·접힘,

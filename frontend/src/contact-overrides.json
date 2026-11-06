@@ -1,0 +1,50 @@
+{
+  "form_id": "4118",
+  "after": "text-insurance",
+  "labels": {
+    "text-insurance": "Student or workplace insurance (if insured, please provide the insurance company name)",
+    "textarea-msg": "Before completing this application, please read the information under Love Toronto Services > Psychotherapeutic Counseling."
+  },
+  "fields": [
+    {
+      "name": "text-letter",
+      "label": "Do you need a counselling report, confirmation letter, or certificate?",
+      "type": "text",
+      "required": true,
+      "max_length": 400,
+      "options": []
+    },
+    {
+      "name": "text-issue",
+      "label": "Reason for counselling (anxiety, depression, family relationships, interpersonal relationships, stress, other)",
+      "type": "text",
+      "required": true,
+      "max_length": 400,
+      "options": []
+    },
+    {
+      "name": "text-type",
+      "label": "Preferred counselling format (in person / online / no preference)",
+      "type": "text",
+      "required": true,
+      "max_length": 400,
+      "options": []
+    },
+    {
+      "name": "text-schedule",
+      "label": "Preferred time (weekday morning / afternoon / weekend)",
+      "type": "text",
+      "required": true,
+      "max_length": 400,
+      "options": []
+    },
+    {
+      "name": "text-expect",
+      "label": "What do you hope to gain from counselling? (immediate crisis intervention / one-time advice / five-session short-term counselling / more than five sessions)",
+      "type": "text",
+      "required": true,
+      "max_length": 400,
+      "options": []
+    }
+  ]
+}

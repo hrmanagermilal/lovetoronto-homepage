@@ -1,10 +1,121 @@
+x-backend: &backend
+  image: lovetoronto-backend:local
+  build:
+    context: ./backend
+    target: runtime
+  environment:
+    POSTGRES_HOST: db
+    POSTGRES_DB: ${POSTGRES_DB:-lovetoronto}
+    POSTGRES_USER: ${POSTGRES_USER:-lovetoronto}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    SMTP_HOST: ${SMTP_HOST:-}
+    SMTP_PORT: ${SMTP_PORT:-587}
+    SMTP_SECURITY: ${SMTP_SECURITY:-starttls}
+    SMTP_USER: ${SMTP_USER:-}
+    SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+    SMTP_FROM: ${SMTP_FROM:-lovetoronto.office@gmail.com}
+  read_only: true
+  tmpfs:
+    - /tmp
+
 services:
+  proxy:
+    image: nginx:stable-alpine
+    ports:
+      - "80:8080"
+      - "443:8443"
+      - "82:8082"
+      - "83:8083"
+    networks:
+      - default
+      - senior-proxy
+    volumes:
+      - ./nginx:/etc/nginx/site:ro
+      - ./nginx/configure.sh:/docker-entrypoint.d/40-configure-site.sh:ro
+      - certificates:/etc/letsencrypt:ro
+      - acme-webroot:/var/www/certbot:ro
+    depends_on:
+      web:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+      - /etc/nginx/conf.d
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 3s
+      start_period: 10s
+      retries: 3
+  certbot:
+    image: certbot/certbot:latest
+    profiles: ["ssl"]
+    volumes:
+      - certificates:/etc/letsencrypt
+      - acme-webroot:/var/www/certbot
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-lovetoronto}
+      POSTGRES_USER: ${POSTGRES_USER:-lovetoronto}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  migrate:
+    <<: *backend
+    command: ["sh", "-c", "alembic upgrade head && python -m app.cli seed"]
+    depends_on:
+      db:
+        condition: service_healthy
+  backend:
+    <<: *backend
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 10
+  mail-worker:
+    <<: *backend
+    command: ["python", "-m", "app.worker"]
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
   web:
     build:
       context: ./frontend
+    networks:
+      default:
+        aliases:
+          - homepage-web
     ports:
       - "85:8080"
     restart: unless-stopped
     read_only: true
     tmpfs:
       - /tmp
+
+volumes:
+  certificates:
+  acme-webroot:
+  postgres-data:
+
+networks:
+  senior-proxy:
+    name: lovetoronto-senior-proxy

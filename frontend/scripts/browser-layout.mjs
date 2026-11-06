@@ -53,7 +53,9 @@ try {
               const rect = node.getBoundingClientRect();
               return rect.width > viewport + 8 && rect.height > 0;
             }).slice(0, 8).map(node => ({ tag: node.tagName, class: node.className, width: Math.round(node.getBoundingClientRect().width) }));
-            return { text: (element.textContent || '').replace(/\s+/g, ' ').trim(), width: document.documentElement.scrollWidth, viewport, overflow };
+            const archived = element.cloneNode(true);
+            archived.querySelectorAll('[data-inquiry-runtime]').forEach(node => node.remove());
+            return { text: (archived.textContent || '').replace(/\s+/g, ' ').trim(), width: document.documentElement.scrollWidth, viewport, overflow };
           });
           const result = { file: entry.id, viewport: viewport.width, exactText: expected === metrics.text, horizontalOverflow: metrics.width > metrics.viewport + 8, overflow: metrics.overflow, errors: [...currentErrors] };
           results.push(result);

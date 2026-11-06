@@ -1,0 +1,1310 @@
+[
+  {
+    "slug": "contact-1-ko",
+    "name": "법률상담 서비스",
+    "language": "ko",
+    "form_id": "3584",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "본인 영문 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "본인 한글 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-yob",
+        "label": "출생년도(yyyy)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "format": "year"
+      },
+      {
+        "name": "tel-phone",
+        "label": "전화번호",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "주소",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "이메일",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other",
+        "label": "상대방 영문 이름",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other-kor",
+        "label": "상대방 한글 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone-other",
+        "label": "상대방 전화번호",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address-other",
+        "label": "상대방 주소",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "문의하시고자 하는 내용을 여기에 상세히 적어주세요. 타이핑을 시작하시면 이 안내문은 자동으로 사라집니다. \n주의사항:온타리오주 외의 지방에 거주하는 분의 경우 저희 변호사, 법무사님께서 법률상담서비스를 제공하실 수 없으므로, 거주 지역에서 도움을 찾아보시기 바랍니다.법률상담은 1회만 무료로 제공됩니다. 1회 이상의 상담이 필요하신 경우 담당 변호사 또는 법무사님과 상담 비용에 관해 상의하시기 바랍니다.\n법률상담 신청시 상대방 정보를 반드시 입력하셔야 상담을 받으실 수 있습니다. 상대방 정보는 conflict of interest를 확인하는 용도외에는 절대 사용되지 않습니다.",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "waiver",
+        "label": "의뢰인은 러브토론토 법률상담 면책 동의서 (LT-WOL-001LC/KR)에 동의하였습니다.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "법률상담 면책 동의서 (LT-WOL-001LC/KR)\n\n본인은 러브토론토 법률 상담 서비스가 자원봉사 변호사 및 법무사를 통하여 법률적 정보를 제공받는 것임을 알고 있습니다. 본인이 제공한 상담 서비스에 필요한 정보는 본인의 자발적인 의지에 의해 제공한 것이며, 본인이 제공한 정보에 대한 법률적 책임은 본인에게 있음을 알고 있습니다. 본인은 러브토론토가 본인으로부터 제공받은 정보를 문의접수 관리자와 담당 자원봉사 변호사 및 법무사 외의 그 누구와도 공유하지 않을 것임을 듣고 신뢰할 것입니다. 러브토론토 자원봉사 변호사 및 법무사를 통해 전달받은 법률 정보를 본인의 경우에 적용시킬 지의 판단과 그 결과에 대한 책임은 본인에게 있음을 알고 있습니다. 본인은 제공받은 정보를 참고 자료로 받아들이고 활용할 것이며, 본인이 법률적 절차를 진행하게 될 경우에는 반드시 본인이 고용한 변호사를 통해서 자문을 받아야 함을 알고 있습니다. 따라서, 본인은 러브토론토 법률 상담 서비스를 통해 전달받은 정보에 대하여 러브토론토, 러브토론토 관계자 및 자원봉사 변호사 및 법무사에게 어떠한 책임도 묻지 않을 것입니다. 본인은 자발적으로 이 동의서에 서약하며, 서약하기전 법률적 조언을 받기를 권고 받았음을 확인합니다."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-3-ko",
+    "name": "정신건강상담 서비스",
+    "language": "ko",
+    "form_id": "3599",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "내담자 영문 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "내담자 한글 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-yob",
+        "label": "출생년도(yyyy)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "format": "year"
+      },
+      {
+        "name": "tel-phone",
+        "label": "전화번호",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "주소",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "이메일",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-insurance",
+        "label": "학생보험 또는 직장보험 가입여부 (보험이 있는 경우 보험회사 이름을 적어주세요)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-letter",
+        "label": "상담소견서(확인서, 증명서) 발급 필요 여부",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-issue",
+        "label": "상담 사유(정신건강 이슈(불안, 우울 등), 가족관계, 대인관계, 스트레스, 기타)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-type",
+        "label": "선호하는 상담 방식(대면/온라인/상관없음)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-schedule",
+        "label": "선호하는 시간대(평일 오전/오후/주말)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-expect",
+        "label": "상담을 통한 기대(즉각적인 위기개입/일회성 조언/5회기 단기상담/5회기 이상 장기상담)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "신청서를 작성하시기 전에 러브토론토 사업>정신건강상담 서비스로 가셔서 내용을 잘 읽어보신 후 신청서를 작성해 주시기 바랍니다.",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "waiver",
+        "label": "의뢰인은 러브토론토 정신건강 상담 면책 동의서 (LT-WOL-004PC/KR)에 동의하였습니다.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "정신건강 상담 면책 동의서 (LT-WOL-004PC/KR)\n\n본인은 러브토론토 정신건강상담 서비스가 러브토론토가 직접 제공하는 서비스가 아니라, 러브토론토와 협력 계약을 체결한 온타리오주 등록 심리치료상담사에게 내담자를 소개시켜주는 서비스임을 알고 있습니다. 이 상담 서비스는 온타리오주 심리치료상담학회 규정에 따라 소정의 비용을 납부하는 유료 서비스임을 알고 있습니다.\n협력 상담사에게 효과적으로 연결하기 위해, 본인이 제공한 모든 정보는 본인이 자발적으로 제공한 것이며, 이 정보는 상담문의를 접수 받아서 상담사에게 전달하는 역할을 담당하는 러브토론토 직원과 담당 상담사 이외 그 누구와도 공유하지 않을 것임을 듣고 신뢰합니다.\n본인은 심리치료사가 제공하는 상담서비스에 대한 일체의 권한 및 잭임이 러브토론토에 없음을 알고 있습니다. \n본인은 심리치료상담사와 상담을 시작하기 위해 심리치료상담사가 제공하는 별도의 동의서에 서약하여야 함을 들었습니다.\n본인은 상담과정에서 발생되는 어떤 문제에 관하여 러브토론토 및 관련 직원에게 책임을 묻지 않을 것입니다. 본인은 자발적으로 이 동의서에 서약합니다."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-4-ko",
+    "name": "Adult Day Program",
+    "language": "ko",
+    "form_id": "3600",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "영문 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "한글 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "전화번호",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "주소",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "이메일",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "메세지를 남겨주세요",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-7-ko",
+    "name": "시니어 복지 서비스 문의",
+    "language": "ko",
+    "form_id": "5343",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "어르신 영문 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "어르신 한글 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-dob",
+        "label": "생년월일(yyyy-mm-dd)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "format": "date"
+      },
+      {
+        "name": "text-address",
+        "label": "주소",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "전화번호",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "이메일",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other",
+        "label": "대리인(신청인) 영문 이름",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other-kor",
+        "label": "대리인(신청인) 한글 이름",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-relationship-other",
+        "label": "어르신과의 관계 (예: Son, Daughter, Caregiver, Family Member 등)",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone-other",
+        "label": "대리인 전화번호",
+        "type": "tel",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address-other",
+        "label": "대리인 이메일",
+        "type": "email",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "menu-consent-other",
+        "label": "대리 신청 권한 동의",
+        "type": "select",
+        "required": false,
+        "max_length": 400,
+        "options": [
+          "",
+          "예",
+          "아니오"
+        ]
+      },
+      {
+        "name": "textarea-reason",
+        "label": "서비스 신청 이유 및 기대",
+        "type": "textarea",
+        "required": true,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "text-date",
+        "label": "진단일: yyyy-mm-dd",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": [],
+        "format": "date"
+      },
+      {
+        "name": "menu-home",
+        "label": "어르신의 거주 형태",
+        "type": "select",
+        "required": true,
+        "max_length": 400,
+        "options": [
+          "",
+          "단독 거주",
+          "배우자와 거주",
+          "가족 또는 보호자와 거주",
+          "요양원/장기 요양 시설",
+          "기타"
+        ]
+      },
+      {
+        "name": "text-time",
+        "label": "(평일 기준, 오전 9시 ~ 오후 5시)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "기타 (어르신과 관련하여 특이사항이나 추가 정보가 있으시면 기재해 주세요)",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [
+      {
+        "type": "representative",
+        "trigger_fields": [
+          "text-name-other",
+          "text-name-other-kor",
+          "text-relationship-other",
+          "tel-phone-other",
+          "email-address-other",
+          "menu-consent-other"
+        ],
+        "name_fields": [
+          "text-name-other",
+          "text-name-other-kor"
+        ],
+        "required_fields": [
+          "text-relationship-other",
+          "tel-phone-other",
+          "email-address-other"
+        ],
+        "consent_field": "menu-consent-other",
+        "consent_value": "예"
+      }
+    ],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-5-ko",
+    "name": "행사 문의",
+    "language": "ko",
+    "form_id": "3602",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "영문 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "한글 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "전화번호",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "주소",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "이메일",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "메세지를 남겨주세요",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-6-ko",
+    "name": "기타 문의",
+    "language": "ko",
+    "form_id": "3601",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "영문 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "한글 이름",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "전화번호",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "주소",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "이메일",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "메세지를 남겨주세요",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-1-en",
+    "name": "Legal Counsel Referral",
+    "language": "en",
+    "form_id": "4115",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "Your English Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "Your Korean Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-yob",
+        "label": "Year of Birth(yyyy)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "format": "year"
+      },
+      {
+        "name": "tel-phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "Address",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "Email",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other",
+        "label": "Opponent English Name",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other-kor",
+        "label": "Opponent Korean Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone-other",
+        "label": "Opponent Phone",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address-other",
+        "label": "Opponent Address",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "Message",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "waiver",
+        "label": "The client has agreed to the Waiver of Liability for Legal Counselling Referral Service (LT-WOL-001LC/EN).",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "Waiver of Liability for Legal Counselling Referral Service (LT-WOL-001LC/EN)\n\nI hereby acknowledge my full understanding of Love Toronto legal counsel referral service. The service entails Love Toronto referring me to the registered attorneys who are willing to provide legal or non-legal information pertaining to my matters. I understand that by submitting this form, any information I provide here will be read by Love Toronto staff. Regarding these, I hereby acknowledge my understanding that Love Toronto will not share or use any of my shared information on this form with anyone but the referred legal counsel. \n\nI hereby acknowledge that I am signing up for Love Toronto legal counsel referral service out of my own free will and voluntariness to receive all information provided by the referred legal counsels. \n\nI hereby acknowledge that if I were to apply the provided information legally, I will need to consult and retain an attorney on my own to further pursue legal proceedings. In the event of voluntarily applying the provided information, I hereby acknowledge potential legal risks of doing so with my own discretion. If any legal consequences were to arise from my own conduct, I hereby acknowledge that only I will be held liable and I cannot hold Love Toronto, including Love Toronto staff and board members, and/or the referred legal counsel accountable for it. \n\nI hereby acknowledge and agree to not hold Love Toronto and/or the referred legal counsel liable for any legal consequences arising from my own application of the provided information to legal proceedings. I affirm that I am signing this waiver form voluntarily."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-3-en",
+    "name": "Psychotherapeutic Counseling",
+    "language": "en",
+    "form_id": "4118",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "Client English Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "Client Korean Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-yob",
+        "label": "Year of Birth(yyyy)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "format": "year"
+      },
+      {
+        "name": "tel-phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "Address",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "Email",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-insurance",
+        "label": "Student or workplace insurance (if insured, please provide the insurance company name)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-letter",
+        "label": "Do you need a counselling report, confirmation letter, or certificate?",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-issue",
+        "label": "Reason for counselling (anxiety, depression, family relationships, interpersonal relationships, stress, other)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-type",
+        "label": "Preferred counselling format (in person / online / no preference)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-schedule",
+        "label": "Preferred time (weekday morning / afternoon / weekend)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-expect",
+        "label": "What do you hope to gain from counselling? (immediate crisis intervention / one-time advice / five-session short-term counselling / more than five sessions)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "Before completing this application, please read the information under Love Toronto Services > Psychotherapeutic Counseling.",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "waiver",
+        "label": "The client has agreed to the Waiver of Liability for psychotherapeutic counselling Service (LT-WOL-004PC/EN).",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "Waiver of Liability for psychotherapeutic counselling Service (LT-WOL-004PC/EN)\n\nI hereby acknowledge that Love Toronto does not provide psychotherapeutic counselling service directly to clients, but it merely provides referral to the registered psychotherapists of Ontario. I understand that this service is offered with a fee under the regulation of College of Psychotherapists of Ontario. I hereby acknowledge that I am signing up for Love Toronto psychotherapeutic counseling referral service out of my own free will and voluntariness. I hereby acknowledge my understanding that all client information is strictly held confidential, and no information will be released to a third party without the client’s prior written authorization, but exceptions to confidentiality may arise in legal and/or ethically obligated situations between the client and psychotherapist. I hereby acknowledge my understanding that the psychotherapist will follow their own policy and procedure regarding when they may be required to take additional steps to ensure safety. I hereby acknowledge and agree to not hold Love Toronto staffs liable for any consequences arising from my own counselling sessions. I affirm that I am signing this waiver form voluntarily."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-4-en",
+    "name": "Adult Day Program",
+    "language": "en",
+    "form_id": "4121",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "English Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "Korean Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "Address",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "Email",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "Message",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-5-en",
+    "name": "Event",
+    "language": "en",
+    "form_id": "4119",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "English Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "Korean Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "Address",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "Email",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "Message",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-6-en",
+    "name": "General Inquery",
+    "language": "en",
+    "form_id": "4120",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "English Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "Korean Name",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "Phone",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-address",
+        "label": "Address",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "Email",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "Message",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  },
+  {
+    "slug": "contact-7-en",
+    "name": "Senior Community Services",
+    "language": "en",
+    "form_id": "5379",
+    "active": false,
+    "fields": [
+      {
+        "name": "text-name",
+        "label": "Client's Full Name (English)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-kor",
+        "label": "Client's Full Name (Korean)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-dob",
+        "label": "Date of Birth(yyyy-mm-dd)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "format": "date"
+      },
+      {
+        "name": "text-address",
+        "label": "Address",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone",
+        "label": "Phone Number",
+        "type": "tel",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address",
+        "label": "Email Address",
+        "type": "email",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other",
+        "label": "Representative's Full Name (English)",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-name-other-kor",
+        "label": "Representative's Full Name (Korean)",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "text-relationship-other",
+        "label": "Relationship to Client (e.g., Son, Daughter, Caregiver, Family Member, etc.)",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "tel-phone-other",
+        "label": "Representative's Phone Number",
+        "type": "tel",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "email-address-other",
+        "label": "Representative's Email Address",
+        "type": "email",
+        "required": false,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "menu-consent-other",
+        "label": "Authorization to apply on behalf of the client",
+        "type": "select",
+        "required": false,
+        "max_length": 400,
+        "options": [
+          "",
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "name": "textarea-reason",
+        "label": "Reason for Application & Expectations",
+        "type": "textarea",
+        "required": true,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "text-date",
+        "label": "Diagnosis date: yyyy-mm-dd",
+        "type": "text",
+        "required": false,
+        "max_length": 400,
+        "options": [],
+        "format": "date"
+      },
+      {
+        "name": "menu-home",
+        "label": "Client living arrangement",
+        "type": "select",
+        "required": true,
+        "max_length": 400,
+        "options": [
+          "",
+          "Living Alone",
+          "Living with Spouse",
+          "Living with Family or Caregiver",
+          "Nursing Home / Long-Term Care Facility",
+          "Other"
+        ]
+      },
+      {
+        "name": "text-time",
+        "label": "(Weekdays, 9:00 AM – 5:00 PM)",
+        "type": "text",
+        "required": true,
+        "max_length": 400,
+        "options": []
+      },
+      {
+        "name": "textarea-msg",
+        "label": "Additional Information (Please provide any special notes or additional information regarding the client.)",
+        "type": "textarea",
+        "required": false,
+        "max_length": 2000,
+        "options": []
+      },
+      {
+        "name": "acceptance-consent",
+        "label": "I consent to the collection of my personal data on this form.",
+        "type": "checkbox",
+        "required": true,
+        "max_length": 400,
+        "options": [],
+        "consent_text": "I consent to the collection of my personal data on this form."
+      }
+    ],
+    "rules": [
+      {
+        "type": "representative",
+        "trigger_fields": [
+          "text-name-other",
+          "text-name-other-kor",
+          "text-relationship-other",
+          "tel-phone-other",
+          "email-address-other",
+          "menu-consent-other"
+        ],
+        "name_fields": [
+          "text-name-other",
+          "text-name-other-kor"
+        ],
+        "required_fields": [
+          "text-relationship-other",
+          "tel-phone-other",
+          "email-address-other"
+        ],
+        "consent_field": "menu-consent-other",
+        "consent_value": "Yes"
+      }
+    ],
+    "recipients": [
+      "lovetoronto.office@gmail.com"
+    ],
+    "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
+    "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
+  }
+]
