@@ -1,0 +1,10 @@
+[Unit]
+Description=Update the DB-IP City Lite database used by the Love Toronto admin geo gate
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=@PROJECT_DIR@
+ExecStart=/usr/bin/docker compose run --rm geoip-update

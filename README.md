@@ -60,6 +60,114 @@ production defaults (Secure cookies, HSTS) and builds mail/SMS links as
 is rejected by the Rails host check. Do not treat the admin port as an
 authorization boundary.
 
+### Homepage admin site (HTTPS 81) and managed front page (HTTPS 84)
+
+| Endpoint | Purpose |
+|---|---|
+| `https://www.lovetoronto.org:81` | Admin site: admin accounts, hero slides, newsletters. **Toronto area only.** |
+| `https://www.lovetoronto.org:84` | New front page: the same site as 443 plus the hero slides and newsletters published from the admin site |
+
+Port 443 is unchanged: it keeps showing the archived hero and newsletter list.
+Both ports use the `www.lovetoronto.org` certificate and are only enabled when
+it exists (`configure.sh` installs `nginx/admin-https.conf` and
+`nginx/front-https.conf`). Allow inbound TCP **81/84** in the host firewall
+and the Azure network security group.
+
+**Toronto-only access.** Every request on port 81 (pages, assets and API) goes
+through an nginx `auth_request` to the backend geo gate (`backend/app/geo.py`).
+The client IP is located with the free [DB-IP](https://db-ip.com) City Lite
+database (CC BY 4.0) and allowed only when it is in Canada and within
+`ADMIN_GEO_RADIUS_KM` (default **50 km**, i.e. the GTA) of Toronto City Hall.
+Private, unknown and unlocatable addresses are denied, and so is everything
+while the database is missing (fail-closed). The admin API also re-checks the
+gate itself, and `/api/admin/` returns 404 on ports 80/443/84/85. IP
+geolocation is approximate: some Toronto connections (mobile networks, VPNs)
+may be located elsewhere. For such cases add an emergency allow-list in `.env`
+and recreate the backend:
+
+```dotenv
+ADMIN_ALLOWED_CIDRS=203.0.113.10/32,198.51.100.0/24
+```
+
+Never allow-list Docker gateway addresses (`172.x.x.1`): connections relayed
+by Docker's userland proxy (e.g. IPv6 or localhost) appear with that address.
+Denials are logged by the backend with the reason
+(`sudo docker compose logs backend | grep denied`); check a specific address with
+`sudo docker compose exec backend python -m app.geo check 203.0.113.10`.
+
+Download the database before first use and install the monthly update timer:
+
+```sh
+sudo docker compose run --rm geoip-update
+sudo bash scripts/install-geoip-timer.sh
+```
+
+The backend reloads the file automatically within a minute of an update.
+
+**Accounts and email 2FA.** The email address is the account ID. An owner
+invites an address; the invitee sets a password through a one-time link
+(72 hours). Each sign-in needs the password **and** a six-digit code emailed to
+that address (10 minutes, five attempts). Five wrong passwords lock the account
+for 15 minutes; login endpoints are also rate-limited per IP. Sessions use an
+`HttpOnly`, `Secure`, `SameSite=Strict` cookie and end after 2 hours idle or 12
+hours. Passwords are stored as scrypt hashes; links, codes and sessions only as
+SHA-256 digests. Roles:
+
+| Role | Can |
+|---|---|
+| Owner | Everything, including inviting, editing, disabling accounts and sending reset links |
+| Editor | Hero slides, newsletters and their own name/password |
+
+At least one active owner must remain; owners cannot disable or demote
+themselves. To change an address, invite the new one and disable the old one.
+Admin email (invites, codes, resets) is sent directly through the SMTP settings
+in `.env`; if SMTP rejects it, the action fails and nothing is created.
+Create the first owner from the server:
+
+```sh
+sudo docker compose exec backend python -m app.cli create-owner --email owner@example.org
+# Without working SMTP, print the one-time link instead of emailing it:
+sudo docker compose exec backend python -m app.cli create-owner --email owner@example.org --print-link
+sudo docker compose exec backend python -m app.cli admins
+```
+
+**Hero slides.** The archived Korean and English home slides were copied into
+the database by migration `0003`, so admins can edit, hide, reorder or replace
+them per language. Uploaded images (JPG/PNG/WebP, max 20 MB) are re-encoded
+(metadata such as GPS is removed) and scaled to at most 2560 px. Links must be
+`https://`/`http://` or internal `#/page?file=...` addresses. If a language
+has no visible slides, port 84 falls back to the archived slides.
+
+**Newsletters.** The database is the source of truth for the newsletter pages
+on port 84 (`소식지` / `News`, including the old `news/page/2|3` addresses):
+the list is loaded from `GET /api/v1/site/content`, newest publication date
+first, nine per page with generated pagination (`&p=2`, …). The English News
+page shows the same list. Each item has a title, publication date, an uploaded
+PDF (max 50 MB) **or** an external `https://` link (e.g. YouTube), and an
+optional cover image. Port 443 still shows the archived list.
+
+All 27 newsletters of the archived site (25 PDFs, 2 YouTube links, 11 covers)
+were imported with their files copied into the `media` volume. The list and
+dates are in `backend/config/archive-newsletters.json`; dates were derived from
+the titles (month or quarter, otherwise January). The import skips titles that
+already exist, so it can be re-run safely, e.g. after restoring an empty
+database:
+
+```sh
+sudo docker compose run --rm --no-deps \
+  -v "$PWD/frontend/public/archive:/archive:ro" \
+  backend python -m app.cli import-archive-newsletters
+```
+
+Uploads are stored in the `media` volume and served by the proxy under
+`/media/` on ports 81 and 84. Files are removed when their slide/newsletter is
+deleted or replaced; uploads that were never saved can be removed with
+`sudo docker compose exec backend python -m app.cli media-gc`. Back up the
+`media` volume together with the database.
+
+The admin UI lives in `admin/` (React + Vite, served by the `admin-web`
+container); the public API for port 84 is `GET /api/v1/site/content`.
+
 Run isolated nginx routing regression checks (no production containers changed):
 
 ```sh
@@ -230,21 +338,34 @@ inbox placement; check the recipient's inbox/spam folder.
 ### Register category recipients and templates
 
 On startup, migrations create `inquiry_categories` and `inquiries`; seeding adds
-the 12 archived form definitions **disabled, routed to lovetoronto.office@gmail.com**. Existing DB
-settings are never overwritten by the seed step. Do not activate production
-submissions before SMTP and HTTPS are ready.
+the 12 archived form definitions with all categories active. They route to
+`lovetoronto.office@gmail.com`; Korean and English senior community services
+also route to `lovetoronto.senior@gmail.com`. Existing DB settings are never
+overwritten by the seed step. Configure SMTP and HTTPS before production use.
 
-All six categories in both languages currently use `lovetoronto.office@gmail.com`.
-Apply this routing to an existing database without changing activation, forms or
-mail templates:
+Existing databases keep their saved settings after seeding. Apply the bundled
+routing and activate all 12 inquiry forms without changing their field schemas
+or mail templates:
 
 ```sh
-sudo docker compose exec backend python -m app.cli set-all-recipients \
-  --recipient lovetoronto.office@gmail.com
+sudo docker compose exec backend python -m app.cli import config/contact-categories.json
 ```
 
-This changes future submissions only; previously accepted inquiries retain their
-saved recipient snapshots.
+This affects future submissions only; previously accepted inquiries retain
+their saved recipient snapshots. Other database settings such as admin accounts
+and saved inquiries are unaffected. For just the senior categories:
+
+```sh
+sudo docker compose exec backend python -m app.cli configure contact-7-ko \
+  --recipient lovetoronto.office@gmail.com \
+  --recipient lovetoronto.senior@gmail.com
+sudo docker compose exec backend python -m app.cli configure contact-7-en \
+  --recipient lovetoronto.office@gmail.com \
+  --recipient lovetoronto.senior@gmail.com
+```
+
+`configure` activates the category after validation. `set-all-recipients` changes
+recipients without changing activation, forms or mail templates.
 
 ```sh
 sudo docker compose exec backend python -m app.cli categories
@@ -339,7 +460,8 @@ sudo docker compose exec backend python -m app.cli retry INQUIRY_UUID
 sudo docker compose logs -f backend mail-worker
 ```
 
-The administrator UI is intentionally deferred. Manage DB access, data retention,
+There is no inquiry administration UI (the port-81 admin site manages hero
+slides, newsletters and admin accounts only). Manage DB access, data retention,
 encrypted backups and mailbox access according to the organization's privacy
 policy. PostgreSQL data persists in `postgres-data`; **do not run
 `docker compose down -v`**, which deletes the database and certificate volumes.
@@ -359,7 +481,8 @@ sudo docker compose -p lovetoronto-backend-test -f compose.test.yaml down
 
 The tests cover all 12 localized form schemas, routing, consent validation,
 idempotency/concurrency, migrations, actual local SMTP delivery, row locking and
-retry exhaustion. In `frontend`, `npm run build` runs content tests and type
+retry exhaustion, plus the admin geo gate, CSRF checks, invite/password/email-code
+login, lockout, roles, uploads and the published hero/newsletter content. In `frontend`, `npm run build` runs content tests and type
 checks; `npm run test:contact` uses Playwright Chromium against a running site
 (`TEST_URL` overrides the default Vite URL), with API responses mocked so no real
 inquiry or email is created. For Vite development, `/api` proxies to

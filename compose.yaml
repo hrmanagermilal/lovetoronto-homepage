@@ -14,6 +14,9 @@ x-backend: &backend
     SMTP_USER: ${SMTP_USER:-}
     SMTP_PASSWORD: ${SMTP_PASSWORD:-}
     SMTP_FROM: ${SMTP_FROM:-lovetoronto.office@gmail.com}
+    ADMIN_BASE_URL: ${ADMIN_BASE_URL:-https://www.lovetoronto.org:81}
+    ADMIN_ALLOWED_CIDRS: ${ADMIN_ALLOWED_CIDRS:-}
+    ADMIN_GEO_RADIUS_KM: ${ADMIN_GEO_RADIUS_KM:-50}
   read_only: true
   tmpfs:
     - /tmp
@@ -26,6 +29,8 @@ services:
       - "443:8443"
       - "82:8082"
       - "83:8083"
+      - "81:8081"
+      - "84:8084"
     networks:
       - default
       - senior-proxy
@@ -34,8 +39,11 @@ services:
       - ./nginx/configure.sh:/docker-entrypoint.d/40-configure-site.sh:ro
       - certificates:/etc/letsencrypt:ro
       - acme-webroot:/var/www/certbot:ro
+      - media:/srv/media:ro
     depends_on:
       web:
+        condition: service_healthy
+      admin-web:
         condition: service_healthy
       backend:
         condition: service_healthy
@@ -80,6 +88,9 @@ services:
         condition: service_healthy
   backend:
     <<: *backend
+    volumes:
+      - media:/data/media
+      - geoip:/data/geoip:ro
     depends_on:
       migrate:
         condition: service_completed_successfully
@@ -97,6 +108,25 @@ services:
       backend:
         condition: service_healthy
     restart: unless-stopped
+  # Monthly DB-IP City Lite download used by the admin geo gate:
+  #   sudo docker compose run --rm geoip-update
+  geoip-update:
+    <<: *backend
+    profiles: ["tools"]
+    command: ["python", "-m", "app.geo", "update"]
+    volumes:
+      - geoip:/data/geoip
+  admin-web:
+    build:
+      context: ./admin
+    networks:
+      default:
+        aliases:
+          - admin-web
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
   web:
     build:
       context: ./frontend
@@ -115,6 +145,8 @@ volumes:
   certificates:
   acme-webroot:
   postgres-data:
+  media:
+  geoip:
 
 networks:
   senior-proxy:

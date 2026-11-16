@@ -121,9 +121,39 @@ def test_bulk_recipients_preserves_activation_templates_and_saved_inquiries(clie
         assert db.get(Inquiry, response.json()["id"]).recipients == ["lovetoronto.office@gmail.com"]
 
 
-def test_seed_defaults_route_all_categories_to_office():
+def test_seed_defaults_route_senior_categories_to_office_and_senior():
     assert len(CONFIGS) == 12
-    assert all(config["recipients"] == ["lovetoronto.office@gmail.com"] for config in CONFIGS)
+    senior_categories = [config for config in CONFIGS if config["slug"].startswith("contact-7-")]
+    other_categories = [config for config in CONFIGS if config not in senior_categories]
+    assert len(senior_categories) == 2
+    assert all(config["active"] for config in senior_categories)
+    assert all(config["recipients"] == [
+        "lovetoronto.office@gmail.com", "lovetoronto.senior@gmail.com",
+    ] for config in senior_categories)
+    assert all(config["active"] for config in other_categories)
+    assert all(config["recipients"] == ["lovetoronto.office@gmail.com"] for config in other_categories)
+
+
+def test_set_category_recipients_preserves_activation_and_templates(client, monkeypatch):
+    from app.cli import main
+
+    with SessionLocal.begin() as db:
+        category = db.get(Category, "contact-7-ko")
+        category.active = False
+        before = (category.subject_template, category.body_template)
+    monkeypatch.setattr("sys.argv", [
+        "cli", "set-recipients", "contact-7-ko",
+        "--recipient", "lovetoronto.office@gmail.com",
+        "--recipient", "lovetoronto.senior@gmail.com",
+    ])
+    main()
+    with SessionLocal() as db:
+        category = db.get(Category, "contact-7-ko")
+        assert category.recipients == [
+            "lovetoronto.office@gmail.com", "lovetoronto.senior@gmail.com",
+        ]
+        assert not category.active
+        assert (category.subject_template, category.body_template) == before
 
 
 @pytest.mark.parametrize("language", ["ko", "en"])

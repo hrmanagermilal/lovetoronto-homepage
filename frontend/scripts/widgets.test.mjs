@@ -108,12 +108,21 @@ test('iPhone 16 hero and source mobile menu layout, submenus and responsive navi
       const toggle = page.locator('.collapse-button');
       assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
       assert.equal(await menu.isVisible(), false);
-      const header = await page.locator('.grop-logo.mobile-logo, .collapse-button, .grop-hadr_donate_btn').evaluateAll(nodes =>
-        nodes.map(node => node.getBoundingClientRect().toJSON()));
-      assert.equal(header.length, 3);
-      const [logo, contact, button] = header;
-      assert.ok(logo.right <= button.left && button.right <= contact.left, 'Original menu sits between logo and contact without overlap');
-      assert.ok(contact.right <= 393);
+      const header = await page.evaluate(() => Object.fromEntries([
+        ['logo', '.grop-logo.mobile-logo'], ['menu', '.collapse-button'],
+        ['contact', '.grop-hadr_donate_btn:not(.grop-volunteer-btn)'], ['volunteer', '[data-volunteer-link]'],
+      ].map(([name, selector]) => [name, document.querySelector(selector)?.getBoundingClientRect().toJSON()])));
+      assert.ok(header.logo.right <= header.menu.left && header.menu.right <= header.contact.left,
+        'Original menu sits between logo and contact without overlap');
+      assert.ok(header.contact.right <= header.volunteer.left && header.volunteer.right <= 393,
+        'Volunteer CTA follows contact without overflowing the viewport');
+      const volunteer = page.locator('[data-volunteer-link]');
+      assert.equal(await volunteer.getAttribute('href'), 'https://www.lovetoronto.org:82/sign_in');
+      assert.equal(await volunteer.getAttribute('target'), '_blank');
+      assert.equal(await volunteer.getAttribute('rel'), 'noopener noreferrer');
+      assert.equal(await volunteer.locator('.grop-volunteer-icon').getAttribute('aria-hidden'), 'true');
+      assert.equal(await volunteer.innerText(), id === 'index.html' ? '\n시니어 서비스 봉사자' : '\nSenior Service Volunteer');
+      assert.equal(await volunteer.evaluate(node => Math.round(node.getBoundingClientRect().height)), 42);
       for (let index = 0; index < 3; index++) {
         const geometry = await page.locator('sr7-slide[data-slide-active="true"]').evaluate(slide => {
           const hero = slide.closest('sr7-module').getBoundingClientRect();

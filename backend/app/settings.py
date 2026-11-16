@@ -17,6 +17,15 @@ class Settings(BaseSettings):
     smtp_user: str = Field(default="", validation_alias=AliasChoices("SMTP_USER", "SMTP_USERNAME", "smtp_user"))
     smtp_password: SecretStr = SecretStr("")
     smtp_from: EmailStr = "lovetoronto.office@gmail.com"
+    admin_base_url: str = "https://www.lovetoronto.org:81"
+    # Comma-separated CIDRs that bypass the Toronto geo check (emergency access).
+    admin_allowed_cidrs: str = ""
+    admin_geo_lat: float = 43.6534
+    admin_geo_lon: float = -79.3839
+    admin_geo_radius_km: float = Field(default=50, gt=0, le=500)
+    admin_geo_country: str = "CA"
+    geoip_db: str = "/data/geoip/dbip-city-lite.mmdb"
+    media_dir: str = "/data/media"
 
     @model_validator(mode="after")
     def secure_smtp(self):

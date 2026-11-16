@@ -1,0 +1,10 @@
+[Unit]
+Description=Update the Love Toronto admin GeoIP database monthly
+
+[Timer]
+OnCalendar=*-*-03 04:00:00
+RandomizedDelaySec=2h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

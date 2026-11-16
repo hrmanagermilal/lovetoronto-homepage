@@ -4,7 +4,7 @@
     "name": "법률상담 서비스",
     "language": "ko",
     "form_id": "3584",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -117,7 +117,7 @@
     "name": "정신건강상담 서비스",
     "language": "ko",
     "form_id": "3599",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -246,7 +246,7 @@
     "name": "Adult Day Program",
     "language": "ko",
     "form_id": "3600",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -318,7 +318,7 @@
     "name": "시니어 복지 서비스 문의",
     "language": "ko",
     "form_id": "5343",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -504,7 +504,8 @@
       }
     ],
     "recipients": [
-      "lovetoronto.office@gmail.com"
+      "lovetoronto.office@gmail.com",
+      "lovetoronto.senior@gmail.com"
     ],
     "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
     "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"
@@ -514,7 +515,7 @@
     "name": "행사 문의",
     "language": "ko",
     "form_id": "3602",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -586,7 +587,7 @@
     "name": "기타 문의",
     "language": "ko",
     "form_id": "3601",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -658,7 +659,7 @@
     "name": "Legal Counsel Referral",
     "language": "en",
     "form_id": "4115",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -771,7 +772,7 @@
     "name": "Psychotherapeutic Counseling",
     "language": "en",
     "form_id": "4118",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -900,7 +901,7 @@
     "name": "Adult Day Program",
     "language": "en",
     "form_id": "4121",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -972,7 +973,7 @@
     "name": "Event",
     "language": "en",
     "form_id": "4119",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -1044,7 +1045,7 @@
     "name": "General Inquery",
     "language": "en",
     "form_id": "4120",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -1116,7 +1117,7 @@
     "name": "Senior Community Services",
     "language": "en",
     "form_id": "5379",
-    "active": false,
+    "active": true,
     "fields": [
       {
         "name": "text-name",
@@ -1302,7 +1303,8 @@
       }
     ],
     "recipients": [
-      "lovetoronto.office@gmail.com"
+      "lovetoronto.office@gmail.com",
+      "lovetoronto.senior@gmail.com"
     ],
     "subject_template": "[Love Toronto] ${category} - ${inquiry_id}",
     "body_template": "${category}\nReference: ${inquiry_id}\n\n${details}\n"

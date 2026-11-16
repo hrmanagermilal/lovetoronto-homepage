@@ -13,12 +13,13 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
+from . import admin, site
 from .db import session
 from .models import Category, Inquiry
 from .schemas import CategoryConfig, InquiryReceipt, InquiryRequest, PublicCategory
 
 logger = logging.getLogger(__name__)
-app = FastAPI(title="Love Toronto inquiries", docs_url=None, redoc_url=None)
+app = FastAPI(title="Love Toronto", docs_url=None, redoc_url=None)
 DB = Annotated[Session, Depends(session)]
 email_adapter = TypeAdapter(EmailStr)
 
@@ -28,7 +29,9 @@ class BodyLimit:
         self.app = app
 
     async def __call__(self, scope, receive, send):
-        if scope["type"] != "http" or scope["method"] != "POST":
+        # Uploads are size-limited by nginx and media.save_upload instead.
+        if scope["type"] != "http" or scope["method"] not in {"POST", "PATCH"} or \
+                scope["path"].startswith("/api/admin/uploads/"):
             await self.app(scope, receive, send)
             return
         chunks = []
@@ -58,6 +61,8 @@ class BodyLimit:
 
 
 app.add_middleware(BodyLimit)
+app.include_router(admin.router)
+app.include_router(site.router)
 
 
 @app.get("/api/health")

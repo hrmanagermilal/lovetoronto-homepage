@@ -1,7 +1,6 @@
 import logging
 import signal
 import smtplib
-import ssl
 import time
 from datetime import datetime, timedelta, timezone
 from email.message import EmailMessage
@@ -9,6 +8,7 @@ from email.message import EmailMessage
 from sqlalchemy import select
 
 from .db import SessionLocal
+from .mailer import smtp_send
 from .models import Inquiry
 from .settings import Settings, settings
 
@@ -25,21 +25,7 @@ def send_mail(inquiry: Inquiry, config: Settings):
     message["Reply-To"] = inquiry.reply_to
     message["Message-ID"] = f"<inquiry-{inquiry.id}@www.lovetoronto.org>"
     message.set_content(inquiry.body)
-    context = ssl.create_default_context()
-    if config.smtp_security == "tls":
-        client = smtplib.SMTP_SSL(config.smtp_host, config.smtp_port, timeout=30, context=context)
-    else:
-        client = smtplib.SMTP(config.smtp_host, config.smtp_port, timeout=30)
-    with client:
-        client.ehlo()
-        if config.smtp_security == "starttls":
-            client.starttls(context=context)
-            client.ehlo()
-        if config.smtp_user:
-            client.login(config.smtp_user, config.smtp_password.get_secret_value())
-        refused = client.send_message(message)
-        if refused:
-            raise smtplib.SMTPRecipientsRefused(refused)
+    smtp_send(message, config)
 
 
 def deliver_one(config: Settings) -> bool:

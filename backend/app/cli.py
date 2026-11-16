@@ -12,12 +12,17 @@ from .schemas import CategoryConfig
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Manage inquiry routing without a public admin API")
+    parser = argparse.ArgumentParser(description="Manage inquiry routing and admin accounts")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("seed")
     commands.add_parser("categories")
     recipients = commands.add_parser("set-all-recipients")
     recipients.add_argument("--recipient", action="append", required=True)
+    category_recipients = commands.add_parser(
+        "set-recipients", help="Update a category's recipients without changing activation or templates"
+    )
+    category_recipients.add_argument("slug")
+    category_recipients.add_argument("--recipient", action="append", required=True)
     configure = commands.add_parser("configure")
     configure.add_argument("slug")
     configure.add_argument("--recipient", action="append", required=True)
@@ -35,6 +40,16 @@ def main():
     retry.add_argument("id", type=UUID)
     test_email = commands.add_parser("test-email")
     test_email.add_argument("--to", required=True)
+    owner = commands.add_parser("create-owner", help="Create an owner admin and email the invitation link")
+    owner.add_argument("--email", required=True)
+    owner.add_argument("--name", default="")
+    owner.add_argument("--print-link", action="store_true",
+                       help="Print the one-time link instead of emailing it (when SMTP is unavailable)")
+    commands.add_parser("admins")
+    archive = commands.add_parser("import-archive-newsletters",
+                                  help="Copy the archived site's newsletters into the media volume and database")
+    archive.add_argument("--archive", type=Path, default=Path("/archive"))
+    commands.add_parser("media-gc", help="Delete uploaded files that nothing references (older than one day)")
     args = parser.parse_args()
     with SessionLocal.begin() as db:
         if args.command in {"seed", "import"}:
@@ -63,6 +78,14 @@ def main():
                 config = CategoryConfig.model_validate({**values, "recipients": recipients})
                 category.recipients = list(config.recipients)
             print(f"Updated recipients for {len(categories)} categories; activation and templates unchanged")
+        elif args.command == "set-recipients":
+            category = db.get(Category, args.slug)
+            if not category:
+                parser.error("Unknown category")
+            values = {key: getattr(category, key) for key in CategoryConfig.model_fields}
+            config = CategoryConfig.model_validate({**values, "recipients": args.recipient})
+            category.recipients = list(config.recipients)
+            print(f"Updated recipients for {category.slug}; activation and templates unchanged")
         elif args.command == "sync-form":
             configs = TypeAdapter(list[CategoryConfig]).validate_json(
                 Path("config/contact-categories.json").read_text()
@@ -120,6 +143,50 @@ def main():
             )
             send_mail(message, config)
             print(f"SMTP server accepted test message {message_id}. Check the recipient inbox/spam folder.")
+        elif args.command == "create-owner":
+            from fastapi import HTTPException
+
+            from .admin import issue_link, send_link
+            from .models import AdminUser
+            email = str(TypeAdapter(EmailStr).validate_python(args.email)).lower()
+            if db.scalar(select(AdminUser).where(AdminUser.email == email)):
+                parser.error("An admin with this email already exists; use the admin site to resend its link")
+            user = AdminUser(email=email, name=args.name, role="owner", active=True, failed_logins=0)
+            db.add(user)
+            db.flush()
+            if args.print_link:
+                print(f"Owner {email} created. One-time password setup link (72h):\n{issue_link(db, user, 'invite')}")
+            else:
+                try:
+                    send_link(db, user, "invite")
+                except HTTPException as error:
+                    parser.error(str(error.detail))
+                print(f"Owner {email} created; invitation emailed.")
+        elif args.command == "import-archive-newsletters":
+            from .archive_import import import_archive_newsletters
+            imported, skipped = import_archive_newsletters(db, args.archive)
+            print(f"Imported {imported} archived newsletters; {skipped} already present")
+        elif args.command == "admins":
+            from .models import AdminUser
+            for user in db.scalars(select(AdminUser).order_by(AdminUser.created_at)):
+                state = "active" if user.active else "disabled"
+                print(user.email, user.role, state, "password-set" if user.password_hash else "invited",
+                      user.last_login_at or "-")
+        elif args.command == "media-gc":
+            import time
+
+            from .media import media_path
+            from .models import HeroSlide, Newsletter
+            from .settings import settings
+            used = set(db.scalars(select(HeroSlide.image_url)))
+            used |= set(db.scalars(select(Newsletter.file_url))) | set(db.scalars(select(Newsletter.thumbnail_url)))
+            removed = 0
+            for path in Path(settings().media_dir).glob("*/*"):
+                url = f"/media/{path.parent.name}/{path.name}"
+                if media_path(url) and url not in used and time.time() - path.stat().st_mtime > 86400:
+                    path.unlink()
+                    removed += 1
+            print(f"Removed {removed} unreferenced uploads")
 
 
 if __name__ == "__main__":

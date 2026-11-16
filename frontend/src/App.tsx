@@ -9,13 +9,16 @@ import MobileMenu from './MobileMenu';
 import type { SliderSettings } from './HeroControls';
 import { createFaqController } from './faq';
 import { createContactController } from './contact';
+import { applySiteContent, loadSiteContent } from './site-content';
+import type { SiteContent } from './site-content';
+import type { Language } from './types';
 
 interface Stylesheet { href: string; media: string }
 interface PageContent { html: string; stylesheets: Stylesheet[]; sliders: SliderSettings[]; bodyClass: string }
 interface LoadedPage { id: string; version: number; content?: PageContent; error?: string }
 const pages = new Map(rawCatalog.pages.map(page => [page.id, page]));
 
-function parseContent(value: unknown): PageContent {
+function parseContent(value: unknown, transform?: (html: string, sliders: SliderSettings[]) => string): PageContent {
   if (!value || typeof value !== 'object' || !('html' in value) || typeof value.html !== 'string' ||
       !('bodyClass' in value) || typeof value.bodyClass !== 'string' ||
       !('stylesheets' in value) || !Array.isArray(value.stylesheets)) throw new Error('Invalid source page data');
@@ -52,7 +55,7 @@ function parseContent(value: unknown): PageContent {
     return { id: item.id, arrows: item.arrows, arrowClass: item.arrowClass, delay: item.delay, pauseOnHover: item.pauseOnHover, motions };
   });
   return {
-    html: DOMPurify.sanitize(value.html, {
+    html: DOMPurify.sanitize(transform ? transform(value.html, sliders) : value.html, {
       ADD_TAGS: ['iframe', 'image_lists'],
       ADD_ATTR: ['allowfullscreen', 'allow', 'loading', 'target', 'data-document', 'referrerpolicy'],
       CUSTOM_ELEMENT_HANDLING: { tagNameCheck: /^(?:sr7-|image_lists$)/ },
@@ -64,11 +67,44 @@ function parseContent(value: unknown): PageContent {
   };
 }
 
+function siteTransform(site: SiteContent, language: Language, pageId: string, listPage: number) {
+  return (html: string, sliders: SliderSettings[]) => {
+    return applySiteContent(html, site, {
+      pageId, language, listPage, home: rawCatalog.homeIds[language] === pageId,
+      slider: sliders[0] && { id: sliders[0].id, motionKey: sliders[0].motions[0]?.key },
+    });
+  };
+}
+
+function addVolunteerLink(html: string, language: Language) {
+  const template = document.createElement('template');
+  template.innerHTML = html;
+  const buttons = template.content.querySelector('.grop-naviga_btns');
+  if (!buttons || buttons.querySelector('[data-volunteer-link]')) return html;
+  const link = document.createElement('a');
+  link.className = 'grop-btn grop-btn_overly grop-hadr_donate_btn grop-volunteer-btn';
+  link.href = 'https://www.lovetoronto.org:82/sign_in';
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.dataset.volunteerLink = 'true';
+  link.setAttribute('aria-label', language === 'en' ? 'Senior Service Volunteer' : '시니어 서비스 봉사자');
+  const icon = document.createElement('span');
+  icon.className = 'grop-volunteer-icon';
+  icon.setAttribute('aria-hidden', 'true');
+  icon.textContent = '';
+  const label = document.createElement('span');
+  label.textContent = language === 'en' ? 'Senior Service Volunteer' : '시니어 서비스 봉사자';
+  link.append(icon, label);
+  buttons.append(link);
+  return template.innerHTML;
+}
+
 export default function App() {
   const [params] = useSearchParams();
   const pageId = params.get('file') || 'index.html';
   const page = pages.get(pageId);
   const anchor = params.get('anchor');
+  const listPage = Number(params.get('p')) || 0;
   const [state, setState] = useState<LoadedPage>({ id: '', version: 0 });
   const [attempt, setAttempt] = useState(0);
   const [loadedStyles, setLoadedStyles] = useState(new Set<string>());
@@ -88,9 +124,14 @@ export default function App() {
     setSliderHosts([]);
     async function load() {
       try {
-        const response = await fetch(`${import.meta.env.BASE_URL}content/${page!.contentFile}`, { signal: controller.signal });
+        const [response, site] = await Promise.all([
+          fetch(`${import.meta.env.BASE_URL}content/${page!.contentFile}`, { signal: controller.signal }),
+          loadSiteContent(),
+        ]);
         if (!response.ok) throw new Error(`Page returned HTTP ${response.status}`);
-        const content = parseContent(await response.json());
+        const language = page!.lang as Language;
+        const content = parseContent(await response.json(), (html, sliders) =>
+          addVolunteerLink(site ? siteTransform(site, language, pageId, listPage)(html, sliders) : html, language));
         if (!controller.signal.aborted) {
           setLoadedStyles(new Set());
           setState({ id: pageId, version: ++styleVersion.current, content });
@@ -103,7 +144,7 @@ export default function App() {
     }
     void load();
     return () => controller.abort();
-  }, [page, pageId, attempt]);
+  }, [page, pageId, attempt, listPage]);
   useEffect(() => {
     if (!content || !page) return;
     document.title = page.title;
@@ -135,7 +176,7 @@ export default function App() {
         section.scrollIntoView({ block: 'start' });
       }
     } else window.scrollTo(0, 0);
-  }, [pending, anchor, pageId]);
+  }, [pending, anchor, pageId, listPage]);
   useEffect(() => {
     const root = container.current;
     if (!root || !content) return;
